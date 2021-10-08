@@ -1,6 +1,8 @@
 package com.cos.navernewssave.util;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,23 +27,28 @@ int aidNum = 800;
 			String aid = String.format("%010d", aidNum);
 			String url = "https://news.naver.com/main/read.naver?mode=LSD&mid=shm&sid1=103&oid=437&aid=0000277493";
 			String html = rt.getForObject(url, String.class);
+			try {
 			Document doc = null;
 			doc = Jsoup.parse(html);
-			try {
 
 				Element titleelem = doc.selectFirst("#articleTitle");
 				Element timeelem = doc.selectFirst(".t11");
 				String title = titleelem.text();
 				String time = timeelem.text();
-				Timestamp createdAt = Timestamp.valueOf(time);
-			//System.out.println(title); // jsoup로 id: articleTitle를 파싱해야함
-			//System.out.println(time);
+				// 오전오후를 yyyy-mm-dd로 parsing하기
+				DateFormat dateParser = new SimpleDateFormat("yyyy.MM.dd. a KK:mm");
+				//  date type을 string으로 변환
+				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				
+				//   2021.10.04. 오후 4:44 -> 2021-10-04 16:44:00.0 바꾸는 code
+				String time2 =  transFormat.format(dateParser.parse(time));
+				
+				Timestamp createdAt = Timestamp.valueOf(time2);
+				
 				News news = News.builder()
 						.title(title)
 						.createdAt(createdAt)
 						.build();
-
-				newsList.add(news);
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
