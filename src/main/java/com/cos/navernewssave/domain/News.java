@@ -20,6 +20,6 @@ public class News {
 	
 	private String company;
 	private String title;
-	private Timestamp createdAt;
+	private String createdAt;
 	
 }
