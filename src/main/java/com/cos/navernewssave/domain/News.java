@@ -1,6 +1,7 @@
 package com.cos.navernewssave.domain;
 
-import java.sql.Timestamp; 
+import java.sql.Timestamp;
+import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,6 +21,6 @@ public class News {
 	
 	private String company;
 	private String title;
-	private Timestamp createdAt;
+	private Date createdAt;
 	
 }
