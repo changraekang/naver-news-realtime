@@ -21,10 +21,6 @@ public class News {
 	
 	private String company;
 	private String title;
-<<<<<<< HEAD
 	private Date createdAt;
-=======
-	private String createdAt;
->>>>>>> 061364adc96a18dfdb09b3d9519c01a76e2f2e4d
 	
 }

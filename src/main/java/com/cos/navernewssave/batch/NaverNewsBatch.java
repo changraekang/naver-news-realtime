@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import com.cos.navernewssave.domain.News;
 import com.cos.navernewssave.domain.NewsRepository;
-import com.cos.navernewssave.util.NaverCraw;
 
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
@@ -25,7 +24,6 @@ public class NaverNewsBatch {
 	
 	
 		private final NewsRepository newsRepository;
-		private final NaverCraw naverCraw;
 	
 	
 		long aid = 278000;
