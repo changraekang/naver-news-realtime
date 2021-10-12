@@ -49,7 +49,6 @@ int aidNum = 800;
 				
 				News news = News.builder()
 						.title(title)
-						.createdAt(createdAt)
 						.build();
 
 				System.out.println(title);

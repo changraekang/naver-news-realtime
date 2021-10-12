@@ -16,7 +16,7 @@ import com.cos.navernewssave.domain.News;
 
 @Component
 public class NaverCraw {
-int aidNum = 800;
+int aidNum = 277493;
 	
 	public List<News> collect() {
 		
@@ -24,8 +24,8 @@ int aidNum = 800;
 		List<News> newsList = new ArrayList<>();
 
 		for (int i = 1; i < 3; i++) {
-			String aid = String.format("%010d", aidNum);
-			String url = "https://news.naver.com/main/read.naver?mode=LSD&mid=shm&sid1=103&oid=437&aid=0000277493";
+			int aid =  aidNum;
+			String url = "https://news.naver.com/main/read.naver?mode=LSD&mid=shm&sid1=103&oid=437&aid=0000"+ aid;
 			String html = rt.getForObject(url, String.class);
 			try {
 			Document doc = null;
@@ -33,23 +33,27 @@ int aidNum = 800;
 
 				Element titleelem = doc.selectFirst("#articleTitle");
 				Element timeelem = doc.selectFirst(".t11");
+				Element compant = doc.selectFirst("#wrap > table > tbody > tr > td.aside > div > div:nth-child(1) > h4 > em");
 				String title = titleelem.text();
-				String time = timeelem.text();
+				String createdAt = timeelem.text();
 				// 오전오후를 yyyy-mm-dd로 parsing하기
-				DateFormat dateParser = new SimpleDateFormat("yyyy.MM.dd. a KK:mm");
+				//DateFormat dateParser = new SimpleDateFormat("yyyy.MM.dd. a KK:mm");
 				//  date type을 string으로 변환
-				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				//SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				
 				//   2021.10.04. 오후 4:44 -> 2021-10-04 16:44:00.0 바꾸는 code
-				String time2 =  transFormat.format(dateParser.parse(time));
+				//String time2 =  transFormat.format(dateParser.parse(time));
 				
-				Timestamp createdAt = Timestamp.valueOf(time2);
+				//Timestamp createdAt = Timestamp.valueOf(time2);
 				
 				News news = News.builder()
 						.title(title)
 						.createdAt(createdAt)
 						.build();
-
+				System.out.println(title);
+				System.out.println(createdAt);
+				newsList.add(news);
+				
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
